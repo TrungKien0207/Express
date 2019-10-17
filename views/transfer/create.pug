@@ -1,0 +1,21 @@
+extends ../layouts/common
+
+block content    
+    h1 New transfer
+
+    if errors
+        each error in errors
+            .alert.alert-danger=error
+
+    form(method="POST")
+        .form-group
+            label(for="account") Account
+            input#account.form-control(name="accountId", type="text")
+            //- for khi click chuot vao label se hien nhảy vào input
+        
+        .form-group
+            label(for="amount") Amount
+            input#amount.form-control(name="amount", type="number")
+            //- for khi click chuot vao label se hien nhảy vào input
+
+        button.btn.btn-primary Transfer
