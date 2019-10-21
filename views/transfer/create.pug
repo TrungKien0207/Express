@@ -1,13 +1,11 @@
-extends ../layouts/common
+extends ../layouts/common.pug
 
 block content    
     h1 New transfer
 
-    if errors
-        each error in errors
-            .alert.alert-danger=error
-
     form(method="POST")
+        input(type="hidden", name="_csrf", value="csrfToken")
+
         .form-group
             label(for="account") Account
             input#account.form-control(name="accountId", type="text")

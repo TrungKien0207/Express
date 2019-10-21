@@ -4,6 +4,10 @@ require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser'); //request body
 var cookieParser = require('cookie-parser');
+var csurf = require('csurf');
+var mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL);
 
 var userRoutes = require('./routes/user.route');
 var authRoutes = require('./routes/auth.route');
@@ -22,9 +26,11 @@ app.set('views', './views');
 
 app.use(cookieParser(process.env.SESSION_SECRECT));
 
+
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(sessionMiddleware);
+app.use(csurf({ cookie: true }));
 
 app.use('/users', authMiddleware.requireAuth, userRoutes);
 app.use('/auth', authRoutes);
